@@ -30,6 +30,7 @@ body{
     width: 100%;
     height: 25%;
     font-size: 3em;
+    padding: 5px;
 }
 
 .buttons{
@@ -82,7 +83,7 @@ body{
     cursor: pointer;
 }
 
-.btn-operator{
+.btn-operator, .clear, .equals{
     height: 15%;
     width: 100%;
     font-size: 1em;
