@@ -137,25 +137,27 @@ operatorBtns.forEach(btn=>{
 });
 
 equalsBtn.addEventListener('click', ()=>{
-    
-    calcArr.push(displayArr.join(''));
-    displayArr = [];
-    firstValue = parseFloat(calcArr[0]);
-    operator = calcArr[1];
-    secondValue = parseFloat(calcArr[2]);
-    let value = operate(operator,firstValue,secondValue);
-    calcArr = [value];
+    if (calcArr.length!==0){
+        calcArr.push(displayArr.join(''));
+        displayArr = [];
+        firstValue = parseFloat(calcArr[0]);
+        operator = calcArr[1];
+        secondValue = parseFloat(calcArr[2]);
+        let value = operate(operator,firstValue,secondValue);
+        calcArr = [value];
 
-    if (calcArr.length===0||calcArr.includes(undefined)){
-        display.textContent = 'Error';
-    }else{
-        display.textContent=value;
+        if (calcArr.includes(undefined)){
+            display.textContent = 'Error';
+        }else{
+            display.textContent=value;
+        }
+        
+
+        if (calcArr.includes(NaN)){
+            display.textContent = 'Error'
+        }
     }
     
-
-    if (calcArr.includes(NaN)){
-        display.textContent = 'Error'
-    }
 
 });
 
