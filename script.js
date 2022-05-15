@@ -3,17 +3,14 @@ const numBtns = document.querySelectorAll('.btn-number');
 const operatorBtns = document.querySelectorAll('.btn-operator');
 const clearBtn = document.querySelector('.clear');
 const equalsBtn = document.querySelector('.equals');
+const decimalBtn = document.querySelector('.decimal');
 
-let displayText = '0';
-let firstValue = 0;
-let secondValue = 0;
+
+let firstValue = '';
+let secondValue = '';
 let operator = '';
-let calcArr = [];
-let displayArr = [];
 
-
-
-display.textContent=displayText;
+display.textContent='0';
 
 
 function add (a,b){
@@ -72,13 +69,13 @@ function operate (operator, num1, num2){
 
 
 function reset(){
-    displayText = '0';
-    firstValue = 0;
-    secondValue = 0;
+
+    display.textContent = '0';
+    firstValue = '';
+    secondValue = '';
     operator = '';
     calcArr = [];
-    displayArr=[];
-    display.textContent=displayText;
+    
 }
 
 
@@ -90,76 +87,62 @@ clearBtn.addEventListener('click', ()=>{
 
 numBtns.forEach(btn=>{
     btn.addEventListener('click', (e)=>{
-        
-        displayArr.push(e.target.textContent);
-        displayText = displayArr.join('');       
-        display.textContent = displayText;
-        console.log(displayArr);
-
-        
-
+        secondValue += e.target.textContent;
+        display.textContent = secondValue;
+    
     })
 });
 
 operatorBtns.forEach(btn=>{
 
     btn.addEventListener('click',(e)=>{
-        if (displayArr.length===0){
-            displayArr = calcArr;
-        }else{
-            calcArr.push(displayArr.join(''));
-        }
-        
-        operator = btn.textContent;
-        display.textContent = btn.textContent;
-        calcArr.push(operator);
-        displayArr = [];
-        if (calcArr.length>=3){
-            operator = calcArr[1];
-            firstValue = parseFloat(calcArr[0]);
-            secondValue = parseFloat(calcArr[2]);
+
+        if(firstValue != '' && secondValue != ''){
+            
+            firstValue = parseFloat(firstValue);
+            secondValue = parseFloat(secondValue);
             let value = operate(operator,firstValue,secondValue);
             display.textContent = value;
-            calcArr.splice(0,3,value);
-        }
+            firstValue = value;
+            secondValue = '';
+            operator = e.target.textContent;
+            display.textContent += ' ' + operator;
 
-        if (calcArr.includes(NaN)){
-            display.textContent = 'Error'
         }
+        else{
+            
+            operator = e.target.textContent;
+            firstValue = secondValue;
+            display.textContent += ' ' + operator;
+            secondValue = '';   
 
-        if (calcArr.length===0||calcArr.includes(undefined)){
-            display.textContent = 'Error';
         }
         
-               
+        
     })
 
 });
 
 equalsBtn.addEventListener('click', ()=>{
-    if (calcArr.length!==0){
-        calcArr.push(displayArr.join(''));
-        displayArr = [];
-        firstValue = parseFloat(calcArr[0]);
-        operator = calcArr[1];
-        secondValue = parseFloat(calcArr[2]);
+
+    if(firstValue != '' && secondValue != ''){
+
+        firstValue = parseFloat(firstValue);
+        secondValue = parseFloat(secondValue);
         let value = operate(operator,firstValue,secondValue);
-        calcArr = [value];
-
-        if (calcArr.includes(undefined)){
-            display.textContent = 'Error';
-        }else{
-            display.textContent=value;
-        }
+        display.textContent = value;
         
-
-        if (calcArr.includes(NaN)){
-            display.textContent = 'Error'
-        }
     }
-    
+   
 
 });
 
+decimalBtn.addEventListener('click', ()=>{
 
+    if (!secondValue.includes('.')){
+        secondValue += '.';
+        display.textContent = secondValue;
+    }
+
+})
 

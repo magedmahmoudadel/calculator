@@ -76,7 +76,7 @@ body{
     margin: 5px ;
 }
 
-.btn-number{
+.btn-number, .btn-decimal{
     width: 33%;
     height: 90%;
     font-size: 1em;
